@@ -1,7 +1,7 @@
 import { User } from "../../entities/User";
-import { ICreateUserDTO, IUsersRepositories } from "../IUsersRepository";
+import { ICreateUserDTO, IUsersRepository } from "../IUsersRepository";
 
-class UsersRepositoryInMemory implements IUsersRepositories {
+class UsersRepositoryInMemory implements IUsersRepository {
   users: User[] = [];
 
   async create({

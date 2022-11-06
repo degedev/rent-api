@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import {
+  DataTypeNotSupportedError,
+  MigrationInterface,
+  QueryRunner,
+  Table,
+} from "typeorm";
 
 export class CreateCars1667420458210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -23,10 +28,49 @@ export class CreateCars1667420458210 implements MigrationInterface {
             name: "daily_rate",
             type: "numeric",
           },
+          {
+            name: "available",
+            type: "boolean",
+            default: true,
+          },
+          {
+            name: "license_plate",
+            type: "varchar",
+          },
+          {
+            name: "fine_amount",
+            type: "numeric",
+          },
+          {
+            name: "brand",
+            type: "varchar",
+          },
+          {
+            name: "category_id",
+            type: "uuid",
+            isNullable: true,
+          },
+          {
+            name: "created_at",
+            type: "timestamp",
+            default: "now()",
+          },
+        ],
+        foreignKeys: [
+          {
+            name: "FKCategoryCar",
+            referencedTableName: "categories",
+            referencedColumnNames: ["id"],
+            columnNames: ["category_id"],
+            onDelete: "SET NULL",
+            onUpdate: "SET NULL",
+          },
         ],
       })
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable("cars");
+  }
 }
