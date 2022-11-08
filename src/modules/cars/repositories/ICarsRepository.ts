@@ -1,4 +1,5 @@
 import { Car } from "../entities/Car";
+import { Specification } from "../entities/Specification";
 
 interface ICreateCarsDTO {
   name: string;
@@ -8,6 +9,8 @@ interface ICreateCarsDTO {
   fine_amount: number;
   brand: string;
   category_id: string;
+  specifications?: Specification[];
+  id?: string;
 }
 
 interface IFindAvailableCars {
@@ -20,6 +23,7 @@ interface ICarsRepository {
   create(data: ICreateCarsDTO): Promise<Car>;
   findByLicensePlate(license_plate: string): Promise<Car>;
   findAvailable(data: IFindAvailableCars): Promise<Car[]>;
+  findById(id: string): Promise<Car>;
 }
 
 export { ICarsRepository, ICreateCarsDTO, IFindAvailableCars };
