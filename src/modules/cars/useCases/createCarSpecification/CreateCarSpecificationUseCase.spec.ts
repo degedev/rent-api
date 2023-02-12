@@ -1,7 +1,7 @@
-import { AppError } from "./../../../../errors/AppError";
+import { AppError } from "../../../../errors/AppError";
 import { CarsRepositoryInMemory } from "../../repositories/in-memory/CarsRepositoryInMemory";
-import { CreateCarSpecificationUseCase } from "./CreateCarSpecificationUseCase";
 import { SpecificationsRepositoryInMemory } from "../../repositories/in-memory/SpecificationsRepositoryInMemory";
+import { CreateCarSpecificationUseCase } from "./CreateCarSpecificationUseCase";
 
 let createCarSpecificationUseCase: CreateCarSpecificationUseCase;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
@@ -44,15 +44,15 @@ describe("CreateCarSpecification", () => {
     expect(specificationCars.specifications.length).toBe(1);
   });
 
-  it("[CreateCarSpecification] should not be able to add a new specification to a nonexistent car", () => {
-    expect(async () => {
-      const car_id = "car_id_test";
-      const specifications_id = ["specifications_id_test"];
+  it("[CreateCarSpecification] should not be able to add a new specification to a nonexistent car", async () => {
+    const car_id = "car_id_test";
+    const specifications_id = ["specifications_id_test"];
 
-      await createCarSpecificationUseCase.execute({
+    await expect(
+      createCarSpecificationUseCase.execute({
         car_id,
         specifications_id,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError("Car does not exists"));
   });
 });

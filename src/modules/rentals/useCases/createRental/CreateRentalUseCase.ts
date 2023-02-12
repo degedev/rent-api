@@ -1,9 +1,10 @@
 import { inject, injectable } from "tsyringe";
+
+import { AppError } from "../../../../errors/AppError";
 import { IDateProvider } from "../../../../shared/container/providers/DateProvider/IDateProvider";
 import { ICarsRepository } from "../../../cars/repositories/ICarsRepository";
 import { Rental } from "../../entities/Rental";
 import { IRentalsRepository } from "../../repositories/IRentalsRepository";
-import { AppError } from "./../../../../errors/AppError";
 
 interface IRequest {
   user_id: string;
@@ -20,7 +21,7 @@ class CreateRentalUseCase {
     private dateProvider: IDateProvider,
     @inject("CarsRepository")
     private carsRepository: ICarsRepository
-  ) { }
+  ) {}
 
   async execute({
     user_id,
@@ -31,14 +32,14 @@ class CreateRentalUseCase {
       await this.rentalsRepository.findOpenRentalByCarId(car_id);
 
     if (checkCarUnavailable) {
-      throw new AppError(`Car is unavailable`);
+      throw new AppError("Car is unavailable");
     }
 
     const checkUserOpenRental =
       await this.rentalsRepository.findOpenRentalByUserId(user_id);
 
     if (checkUserOpenRental) {
-      throw new AppError(`User has a rental in progress`);
+      throw new AppError("User has a rental in progress");
     }
 
     const minimumHoursDiff = 24;
@@ -49,7 +50,7 @@ class CreateRentalUseCase {
     );
 
     if (compare < minimumHoursDiff) {
-      throw new AppError(`Invalid return time`);
+      throw new AppError("Invalid return time");
     }
 
     const rental = await this.rentalsRepository.create({

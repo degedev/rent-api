@@ -1,5 +1,6 @@
-import { AppError } from "../../../../errors/AppError";
 import { inject, injectable } from "tsyringe";
+
+import { AppError } from "../../../../errors/AppError";
 import { Car } from "../../entities/Car";
 import { ICarsRepository } from "../../repositories/ICarsRepository";
 
@@ -32,7 +33,7 @@ class CreateCarUseCase {
     );
 
     if (carAlreadyExists) {
-      throw new AppError(`Car ${name} already exists`);
+      throw new AppError("Car already exists");
     }
 
     const car = await this.carsRepository.create({

@@ -1,8 +1,9 @@
-import { response } from "express";
 import { hash } from "bcryptjs";
+import { response } from "express";
 import request from "supertest";
 import { Connection, createConnection } from "typeorm";
 import { v4 as uuid } from "uuid";
+
 import { app } from "../../../../app";
 
 let connection: Connection;
@@ -33,7 +34,7 @@ describe("ListCategoriesController", () => {
       password: "admin",
     });
 
-    const { token } = responseToken.body;
+    const { refresh_token } = responseToken.body;
 
     await request(app)
       .post("/categories")
@@ -42,7 +43,7 @@ describe("ListCategoriesController", () => {
         description: "category_description",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refresh_token}`,
       });
 
     const response = await request(app).get("/categories");

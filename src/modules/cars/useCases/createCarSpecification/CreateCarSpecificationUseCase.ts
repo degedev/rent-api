@@ -1,8 +1,9 @@
-import { AppError } from "./../../../../errors/AppError";
 import { inject, injectable } from "tsyringe";
+
+import { AppError } from "../../../../errors/AppError";
+import { Car } from "../../entities/Car";
 import { ICarsRepository } from "../../repositories/ICarsRepository";
 import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
-import { Car } from "../../entities/Car";
 
 interface IRequest {
   car_id: string;
@@ -21,7 +22,7 @@ class CreateCarSpecificationUseCase {
     const checkIfCarExists = await this.carsRepository.findById(car_id);
 
     if (!checkIfCarExists) {
-      throw new AppError(`Car does not exists`);
+      throw new AppError("Car does not exists");
     }
 
     const specifications = await this.specificationsRepository.findByIds(

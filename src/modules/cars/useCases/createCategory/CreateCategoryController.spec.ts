@@ -1,8 +1,8 @@
 import { hash } from "bcryptjs";
-import { createConnection } from "typeorm";
-import { Connection } from "typeorm";
 import request from "supertest";
+import { createConnection, Connection } from "typeorm";
 import { v4 as uuid } from "uuid";
+
 import { app } from "../../../../app";
 
 let connection: Connection;
@@ -34,7 +34,7 @@ describe("CreateCategoryController", () => {
       password: "admin",
     });
 
-    const { token } = responseToken.body;
+    const { refresh_token } = responseToken.body;
 
     const response = await request(app)
       .post("/categories")
@@ -43,7 +43,7 @@ describe("CreateCategoryController", () => {
         description: "category_description",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refresh_token}`,
       });
 
     expect(response.status).toBe(201);
