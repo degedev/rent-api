@@ -1,5 +1,5 @@
-import { getRepository } from "typeorm";
-import { Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
+
 import { Car } from "../../entities/Car";
 import {
   ICarsRepository,
@@ -80,7 +80,8 @@ class CarsRepository implements ICarsRepository {
   }
 
   async updateAvailableStatus(id: string, available: boolean): Promise<void> {
-    await this.repository.createQueryBuilder()
+    await this.repository
+      .createQueryBuilder()
       .update()
       .set({ available })
       .where("id = :id")
