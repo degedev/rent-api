@@ -22,6 +22,10 @@ class SendForgotPasswordMailUseCase {
   ) {}
   async execute(email: string) {
     const user = await this.usersRepository.findByEmail(email);
+    console.log(
+      "🚀 ~ file: SendForgotPasswordMailUseCase.ts:25 ~ SendForgotPasswordMailUseCase ~ execute ~ user:",
+      user
+    );
 
     const templatePath = resolve(
       __dirname,

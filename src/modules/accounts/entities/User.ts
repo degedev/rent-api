@@ -33,7 +33,7 @@ class User {
 
   @Expose({ name: "avatar_url" })
   getAvatarUrl(): string {
-    switch (process.env.disk) {
+    switch (process.env.STORAGE_PROVIDER) {
       case "s3":
         return `${process.env.AWS_BUCKET_URL}/avatar/${this.avatar}`;
       case "local":

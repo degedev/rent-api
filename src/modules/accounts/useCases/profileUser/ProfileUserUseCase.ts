@@ -1,8 +1,9 @@
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import { IUserResponseDTO, UserMap } from "../../mapper/UserMap";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
+@injectable()
 class ProfileUserUseCase {
   constructor(
     @inject("UsersRepository")
