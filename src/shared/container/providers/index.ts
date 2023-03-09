@@ -20,7 +20,7 @@ const mailProvider = {
 };
 
 container.registerInstance<IMailProvider>(
-  "EtherealMailProvider",
+  "MailProvider",
   mailProvider[process.env.MAIL_PROVIDER]
 );
 

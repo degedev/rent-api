@@ -1,2 +1,7 @@
 node_modules
 der_rent.png
+.vscode
+tmp/*
+.env
+!tmp/.gitkeep
+ormconfig.json
