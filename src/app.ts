@@ -3,19 +3,23 @@ import "dotenv/config";
 
 import cors from "cors";
 import express, { NextFunction, Request, response, Response } from "express";
+
 import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
 
 import "./shared/container";
+
 import upload from "./config/upload";
 import createConnection from "./database";
 import { AppError } from "./errors/AppError";
+import rateLimiter from "./middlewares/rateLimiter";
 import { router } from "./routes";
 import swaggerFile from "./swagger.json";
 
 createConnection();
 const app = express();
 
+app.use(rateLimiter);
 app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
